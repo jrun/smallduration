@@ -14,49 +14,62 @@ class SmallDuration
     :hours   => 3600
   }
   
-  UNITS = [
+  PARTS = [
     :fraction, 
     :seconds 
   ]
 
-  attr_reader *UNITS
+  attr_reader *PARTS
 
-  # Initialize a duration from the given string representation.
+  # Initializes a SmallDuration using the given duration.
   #
-  # Example durations:
+  # ==== Parameters
+  # duration<to_s>:: The duration to parse. 
   #
-  # 9.33      => 9 seconds and 33 hundreths
-  # 8:22.11   => 8 minnutes 22 seconds 11 hundreths
-  # 67:32     => 1 hour 38 minutes
-  # 2:12:09   => 2 hours 12 minutes 9 seconds
-  def initialize(duration_str)
-    @fraction, @seconds = parse(duration_str)
+  # ==== Examples
+  #
+  # 9.33      => 9.33 seconds
+  # 8:22.11   => 502.11 seconds
+  # 67:32     => 4052 seconds
+  # 2:12:09   => 7929 seconds
+  #
+  def initialize(duration)
+    @fraction, @seconds = parse(duration.to_s)
   end
   
-  FORMAT_RE = /\A(((\d+):(\d?\d):)|((\d+):))?(\d?\d)(\.(\d+))?\Z/
+  def to_s
+    "#{@seconds}.#{@fraction}"
+  end
   
   def to_d
-    BigDecimal("#{@seconds}.#{@fraction}")
+    BigDecimal(to_s)
+  end
+  
+  # Implement Comparison
+  #
+  # ==== Parameters
+  # other<to_d>:: The object to comapre to.
+  def <=>(other)
+    self.to_d <=> other.to_d
   end
   
   private
+    FORMAT_RE = /\A(((\d+):(\d?\d):)|((\d+):))?(\d?\d)(\.(\d+))?\Z/
+    
     def parse(str)
-      unless str =~ FORMAT_RE
-        raise InvalidFormat.new("Invalid string: #{str}") 
-      end
-      # the matchdata could have been used to pull out the segments
-      # but this seemed easier (to write and understand). unless 
-      # i'm missing something there would have been a fair amount 
-      # of poking at the match data to pull out each segment.
+      raise InvalidFormat.new(str) unless str =~ FORMAT_RE
+      # the matchdata could have been used to pull out the parts
+      # but this seemed easier (to write and understand). there 
+      # would have been a fair amount of understanding what each 
+      # parts was.
       left, right = str.split('.')
       parts = left.split(":")
       
       fraction = right.to_i
       
-      seconds = [:seconds, :minutes, :hours].inject(0) do |sec, seg|
-        sec += (parts.pop.to_i * MULTIPLES[seg])
+      seconds = [:seconds, :minutes, :hours].inject(0) do |sum, multiple|
+        sum + parts.pop.to_i * MULTIPLES[multiple]
       end
       [fraction, seconds]
     end
-  
 end

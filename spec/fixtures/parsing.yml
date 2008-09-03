@@ -21,3 +21,15 @@
 - value: '5:5:33'
   fraction: 0
   seconds: 18333
+
+- value: '67:32'
+  fraction: 0
+  seconds: 4052
+  
+- value: '8:22.11'
+  fraction: 11
+  seconds: 502
+
+- value: '2:12:09'
+  fraction: 0
+  seconds: 7929

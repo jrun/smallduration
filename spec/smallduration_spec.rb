@@ -2,7 +2,12 @@ require File.dirname(__FILE__) + '/spec_helper.rb'
 
 
 describe SmallDuration do
-
+  describe '#to_d' do
+    it "should be <seconds>.<fraction>" do
+     SmallDuration.new('11.99').to_d == 11.99
+    end
+  end
+  
   describe "parsing" do
     yaml_fixture(:invalid_formats).each do |bad_value|
       it "should raise a SmallDuration::InvalidFormat when parsing #{bad_value}" do
@@ -20,7 +25,18 @@ describe SmallDuration do
         duration.seconds.should == example['seconds']
       end      
     end
-    
+  end
+  
+  describe "comparing" do
+    yaml_fixture(:comparisions).each do |example|
+      left = SmallDuration.new(example['left'])
+      op = example['op']      
+      right = SmallDuration.new(example['right'])
+
+      it "#{left} #{op} #{right}" do
+        left.send(op, right).should be_true
+      end      
+    end
   end
   
 end

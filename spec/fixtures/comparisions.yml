@@ -1,19 +1,23 @@
-- :left: '9.3'
-  :op: '>'
-  :right: '12.3'
-  :result: false
+- left: '9.3'
+  op: '<'
+  right: '12.3'
   
-- :left: '12.3'
-  :op: '<'
-  :right: '12.32111'
-  :result: true  
+- left: '12.3'
+  op: '<'
+  right: '12.32111'
   
-- :left: '9.3'
-  :op: '>='
-  :right: '9.3'
-  :result: true
+- left: '9.3'
+  op: '>='
+  right: '9.3'
   
-- :left: '67'
-  :op: '='
-  :right: '1:07'
-  :result: true
+- left: '67'
+  op: '=='
+  right: '1:07'
+
+- left: '2:00:00'
+  op: '<'
+  right: '2:00:01'
+  
+- left: '2:00:00'
+  op: '=='
+  right: '120:00'  
