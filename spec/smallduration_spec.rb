@@ -33,7 +33,7 @@ describe SmallDuration do
       op = example['op']      
       right = SmallDuration.new(example['right'])
 
-      it "#{left} #{op} #{right}" do
+      it [left, op, right].join(" ") do
         left.send(op, right).should be_true
       end      
     end
