@@ -1,0 +1,23 @@
+- value: '9.3'
+  fraction: 3
+  seconds: 9
+
+- value: '10.11111'
+  fraction: 11111
+  seconds: 10
+
+- value: '1:12.55'
+  fraction: 55
+  seconds: 72
+
+- value: '10:10.55'
+  fraction: 55
+  seconds: 610
+
+- value: '3:01:45'
+  fraction: 0
+  seconds: 10905
+  
+- value: '5:5:33'
+  fraction: 0
+  seconds: 18333
