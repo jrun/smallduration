@@ -6,8 +6,7 @@ require 'smallduration/error'
 
 class SmallDuration
   include Comparable
-  include Enumerable
-  
+
   MULTIPLES = {
     :seconds => 1,
     :minutes => 60,
