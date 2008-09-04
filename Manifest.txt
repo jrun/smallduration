@@ -7,6 +7,7 @@ Rakefile
 config/hoe.rb
 config/requirements.rb
 lib/smallduration.rb
+lib/smallduration/error.rb
 lib/smallduration/version.rb
 script/console
 script/destroy
