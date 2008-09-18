@@ -49,7 +49,7 @@ class SmallDuration
   # ==== Parameters
   # other<to_d>:: The object to comapre to.
   def <=>(other)
-    self.to_d <=> other.to_d
+    self.to_d <=> (other.respond_to?(:to_d) ? other.to_d : other)
   end
   
   private

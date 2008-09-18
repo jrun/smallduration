@@ -28,6 +28,10 @@ describe SmallDuration do
   end
   
   describe "comparing" do
+    it "should be comparable to a BigDecimal" do
+      SmallDuration.new('10.50').should == BigDecimal('10.50')
+    end
+    
     yaml_fixture(:comparisions).each do |example|
       left = SmallDuration.new(example['left'])
       op = example['op']      
