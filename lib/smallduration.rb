@@ -33,11 +33,11 @@ class SmallDuration
   # 2:12:09   => 7929 seconds
   #
   def initialize(duration)
-    @fraction, @seconds = parse(duration.to_s)
+    @fraction, @fraction_padding, @seconds = parse(duration.to_s)
   end
   
   def to_s
-    "#{@seconds}.#{@fraction}"
+    "#{@seconds}.#{'0' * @fraction_padding}#{@fraction}"
   end
   
   def to_d
@@ -64,11 +64,16 @@ class SmallDuration
       left, right = str.split('.')
       parts = left.split(":")
       
-      fraction = right.to_i
-      
+      if right
+        fraction = right.to_i
+        fraction_padding = right.length - fraction.to_s.length
+      else
+        fraction, fraction_padding = 0,0
+      end
+            
       seconds = [:seconds, :minutes, :hours].inject(0) do |sum, multiple|
         sum + parts.pop.to_i * MULTIPLES[multiple]
       end
-      [fraction, seconds]
+      [fraction, fraction_padding, seconds]
     end
 end
